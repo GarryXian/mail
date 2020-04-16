@@ -79,6 +79,7 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
         for (MailAddressInfoPO addressInfoPO : addressInfoPOS) {
             MailFileInfoPO mailFileInfoPO = new MailFileInfoPO();
             mailFileInfoPO.setBatchNo(batchNo);
+            mailFileInfoPO.setAddressId(addressInfoPO.getAddressId());
             mailFileInfoPO.setFileName(file.getName());
             mailFileInfoPO.setFilePath(file.getPath());
             mailFileInfoPO.setCreationDate(new Date());
