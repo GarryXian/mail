@@ -1,5 +1,7 @@
 package com.garry.mail.service;
 
+import com.garry.mail.model.MailFileFolderPathPO;
+
 /**
  * 附件文件夹实体类 Service 接口
  *
@@ -12,5 +14,12 @@ package com.garry.mail.service;
  * @author create by CodeGenerator
  */
 public interface MailFileFolderPathService {
+
+    /**
+     * 查找当前的附件文件夹地址
+     * @return
+     */
+    MailFileFolderPathPO findFolder();
+
 
 }

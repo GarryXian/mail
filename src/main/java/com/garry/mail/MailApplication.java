@@ -11,9 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 import java.time.Duration;
 import java.time.Instant;
 
+@MapperScan(basePackages = {"com.garry.mail.dao","com.baomidou.mybatisplus.core.mapper"})
 @SpringBootApplication
 @ComponentScan("com.garry.mail")
-@MapperScan("com.garry.mail.dao")
 @EnableAutoConfiguration
 public class MailApplication {
 

@@ -23,11 +23,11 @@ public class MailTestController {
 
     @GetMapping("/send")
     public void testMail() {
-        MailBean mailBean = new MailBean();
-        mailBean.setRecipient("18676391882@163.com");
-        mailBean.setSubject("就这就这就这就这就这?");
-        mailBean.setContent("就这就这就这就这就这?");
-        mailBean.setMAIL_SENDER("garry_xian92@163.com");
-        mailService.sendSimpleMail(mailBean);
+//        MailBean mailBean = new MailBean();
+//        mailBean.setRecipient("18676391882@163.com");
+//        mailBean.setSubject("就这就这就这就这就这?");
+//        mailBean.setContent("就这就这就这就这就这?");
+//        mailBean.setMAIL_SENDER("garry_xian92@163.com");
+//        mailService.sendSimpleMail(mailBean);
     }
 }

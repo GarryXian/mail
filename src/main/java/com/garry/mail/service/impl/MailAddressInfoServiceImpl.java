@@ -1,17 +1,19 @@
 package com.garry.mail.service.impl;
 
 import com.garry.mail.dao.MailAddressInfoDAO;
+import com.garry.mail.model.MailAddressInfoPO;
 import com.garry.mail.service.MailAddressInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
  * 邮箱地址信息 Service 实现
- *
+ * <p>
  * <pre>
  * -----------------------History----------------------
  * DATE        AUTHOR        VERSION        DESCRIPTION
@@ -27,5 +29,10 @@ public class MailAddressInfoServiceImpl implements MailAddressInfoService {
 
     @Resource
     private MailAddressInfoDAO mailAddressInfoDAO;
+
+    @Override
+    public List<MailAddressInfoPO> findAll() {
+        return mailAddressInfoDAO.findAll();
+    }
 
 }

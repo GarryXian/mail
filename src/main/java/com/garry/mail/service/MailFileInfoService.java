@@ -1,5 +1,9 @@
 package com.garry.mail.service;
 
+import com.garry.mail.model.MailFileInfoPO;
+
+import java.text.ParseException;
+
 /**
  * 附件文件实体类 Service 接口
  *
@@ -13,5 +17,9 @@ package com.garry.mail.service;
  */
 public interface MailFileInfoService {
 
-
+    /**
+     * 构建邮箱地址与附件信息表
+     * @return
+     */
+    String buildAndSaveMailFileInfo() throws ParseException;
 }

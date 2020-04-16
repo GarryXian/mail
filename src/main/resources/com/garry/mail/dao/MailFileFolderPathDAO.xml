@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.garry.dao.MailFileFolderPathDAO">
+<mapper namespace="com.garry.mail.dao.MailFileFolderPathDAO">
 
-    <resultMap id="BaseResultMap" type="com.garry.model.MailFileFolderPathPO">
+    <resultMap id="BaseResultMap" type="com.garry.mail.model.MailFileFolderPathPO">
         <id column="folder_path_id" property="folderPathId"/>
         <result column="folder_path" property="folderPath"/>
         <result column="creation_date" property="creationDate"/>
@@ -30,22 +30,10 @@
 			</if>
 		</where>
 	</select>
-
-	<select id="pageQuery" parameterType="java.util.Map" resultMap="BaseResultMap">
+	<select id="selectOne" parameterType="java.util.Map" resultMap="BaseResultMap">
 		SELECT
 		<include refid="BaseColumns"/>
-		FROM mail_file_folder_path
-		<where>
-			<if test="folderPathId != null ">
-				AND folder_path_id = #{folderPathId}
-			</if>
-			<if test="folderPath != null ">
-				AND folder_path = #{folderPath}
-			</if>
-			<if test="creationDate != null ">
-				AND creation_date = #{creationDate}
-			</if>
-		</where>
+		FROM mail_file_folder_path limit 1
 	</select>
 
 

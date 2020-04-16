@@ -1,11 +1,16 @@
 package com.garry.mail.controller;
 
+import com.garry.mail.dto.ResponseResult;
+import com.garry.mail.model.MailBean;
+import com.garry.mail.model.MailFileInfoPO;
 import com.garry.mail.service.MailFileInfoService;
 import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 
 /**
  * 附件文件实体类 Controller 控制器
@@ -26,7 +31,17 @@ public class MailFileInfoController {
 	@Resource
 	private MailFileInfoService mailFileInfoService;
 
-
+	@GetMapping("/buildMailFileInfo")
+	public ResponseResult<String> buildAndSaveMailFileInfo() {
+		try {
+			String result =	mailFileInfoService.buildAndSaveMailFileInfo();
+			return ResponseResult.createSuccessResult(
+                    String.format("构建成功,批次号 %s, 请留意检查!!", result));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseResult.createFailResult("构建失败",null );
+		}
+	}
 
 
 }

@@ -1,5 +1,6 @@
 package com.garry.mail.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.garry.mail.model.MailFileInfoPO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,7 +10,7 @@ import java.util.Map;
 
 /**
  * 附件文件实体类 MyBatis Mapper Dao接口
- *
+ * <p>
  * <pre>
  * -----------------------History----------------------
  * DATE        AUTHOR        VERSION        DESCRIPTION
@@ -19,10 +20,9 @@ import java.util.Map;
  * @author create by CodeGenerator
  */
 @Mapper
-public interface MailFileInfoDAO  {
+public interface MailFileInfoDAO extends BaseMapper<MailFileInfoPO> {
 
-	List<MailFileInfoPO> query(Map<String, Object> param);
-
+    List<MailFileInfoPO> query(Map<String, Object> param);
 
 
 }

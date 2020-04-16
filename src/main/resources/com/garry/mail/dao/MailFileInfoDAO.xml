@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.garry.dao.MailFileInfoDAO">
+<mapper namespace="com.garry.mail.dao.MailFileInfoDAO">
 
-    <resultMap id="BaseResultMap" type="com.garry.model.MailFileInfoPO">
+    <resultMap id="BaseResultMap" type="com.garry.mail.model.MailFileInfoPO">
         <id column="file_id" property="fileId"/>
         <result column="address_id" property="addressId"/>
         <result column="batch_no" property="batchNo"/>

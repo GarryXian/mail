@@ -1,5 +1,7 @@
 package com.garry.mail.model;
 
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -25,21 +27,30 @@ public class MailAddressInfoPO  {
 
 	private static final long serialVersionUID = 1L;
 
+
 	/**邮箱地址id*/
 	@ApiModelProperty(value = "邮箱地址id")
+	@TableId(value = "address_id", type = IdType.ID_WORKER)
 	private Long addressId;
 
 	/**邮箱地址*/
 	@ApiModelProperty(value = "邮箱地址")
+	@TableField("address")
 	private String address;
 
 	/**邮箱地址名称*/
 	@ApiModelProperty(value = "邮箱地址名称")
+	@TableField("address_name")
 	private String addressName;
 
 	/**创建时间*/
 	@ApiModelProperty(value = "创建时间")
+	@TableField("creation_date")
 	private java.util.Date creationDate;
 
+
+	@ApiModelProperty(value = "文件名字")
+	@TableField("file_name")
+	private String fileName;
 
 }

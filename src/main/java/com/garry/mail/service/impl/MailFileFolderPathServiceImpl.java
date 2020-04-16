@@ -1,6 +1,7 @@
 package com.garry.mail.service.impl;
 
 import com.garry.mail.dao.MailFileFolderPathDAO;
+import com.garry.mail.model.MailFileFolderPathPO;
 import com.garry.mail.service.MailFileFolderPathService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,4 +29,13 @@ public class MailFileFolderPathServiceImpl implements MailFileFolderPathService 
     @Resource
     private MailFileFolderPathDAO mailFileFolderPathDAO;
 
+    /**
+     * 查找当前的附件文件夹地址
+     *
+     * @return
+     */
+    @Override
+    public MailFileFolderPathPO findFolder() {
+        return mailFileFolderPathDAO.selectOne();
+    }
 }

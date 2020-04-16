@@ -1,5 +1,9 @@
 package com.garry.mail.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -25,16 +29,20 @@ public class MailFileFolderPathPO  {
 
 	private static final long serialVersionUID = 1L;
 
+
 	/**路径id*/
 	@ApiModelProperty(value = "路径id")
+	@TableId(value = "folder_path_id", type = IdType.ID_WORKER)
 	private Long folderPathId;
 
 	/**文件夹绝对路径*/
 	@ApiModelProperty(value = "文件夹绝对路径")
+	@TableField("folder_path")
 	private String folderPath;
 
 	/**创建日期*/
 	@ApiModelProperty(value = "创建日期")
+	@TableField("creation_date")
 	private java.util.Date creationDate;
 
 }

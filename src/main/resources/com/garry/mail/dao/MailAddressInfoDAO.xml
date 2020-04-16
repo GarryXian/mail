@@ -7,6 +7,7 @@
         <result column="address" property="address"/>
         <result column="address_name" property="addressName"/>
         <result column="creation_date" property="creationDate"/>
+		<result column="file_name" property="fileName"/>
     </resultMap>
 
 	<sql id="BaseColumns">
@@ -14,6 +15,7 @@
 			,address
 			,address_name
 			,creation_date
+			,file_name
 	</sql>
 
 	<select id="query" parameterType="java.util.Map" resultMap="BaseResultMap">
@@ -36,26 +38,11 @@
 		</where>
 	</select>
 
-	<select id="pageQuery" parameterType="java.util.Map" resultMap="BaseResultMap">
+	<select id="findAll" parameterType="java.util.Map" resultMap="BaseResultMap">
 		SELECT
 		<include refid="BaseColumns"/>
 		FROM mail_address_info
-		<where>
-			<if test="addressId != null ">
-				AND address_id = #{addressId}
-			</if>
-			<if test="address != null ">
-				AND address = #{address}
-			</if>
-			<if test="addressName != null ">
-				AND address_name = #{addressName}
-			</if>
-			<if test="creationDate != null ">
-				AND creation_date = #{creationDate}
-			</if>
-		</where>
 	</select>
-
 
 
 </mapper>

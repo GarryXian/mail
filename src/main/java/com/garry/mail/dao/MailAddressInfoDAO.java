@@ -1,5 +1,6 @@
 package com.garry.mail.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.garry.mail.model.MailAddressInfoPO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,8 +20,9 @@ import java.util.Map;
  * @author create by CodeGenerator
  */
 @Mapper
-public interface MailAddressInfoDAO{
+public interface MailAddressInfoDAO extends BaseMapper<MailAddressInfoPO> {
 
 	List<MailAddressInfoPO> query(Map<String, Object> param);
 
+    List<MailAddressInfoPO> findAll();
 }
