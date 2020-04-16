@@ -1,17 +1,15 @@
 package com.garry.mail.service.impl;
 
 import com.garry.mail.dao.MailFileInfoDAO;
-import com.garry.mail.model.MailAddressInfoPO;
-import com.garry.mail.model.MailFileFolderPathPO;
-import com.garry.mail.model.MailFileInfoPO;
-import com.garry.mail.service.MailAddressInfoService;
-import com.garry.mail.service.MailFileFolderPathService;
-import com.garry.mail.service.MailFileInfoService;
-import com.garry.mail.util.DateUtils;
+import com.garry.mail.model.*;
+import com.garry.mail.service.*;
 import com.garry.mail.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -43,6 +41,12 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
     private MailFileFolderPathService mailFileFolderPathService;
     @Resource
     private MailAddressInfoService mailAddressInfoService;
+    @Resource
+    private MailGroupInfoService mailGroupInfoService;
+    @Resource
+    private MailService mailService;
+    @Value("${sender}")
+    private String sender;
 
     /**
      * 构建邮箱地址与附件信息表
@@ -52,41 +56,81 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
     @Override
     public String buildAndSaveMailFileInfo() throws ParseException {
         // 创建批次号
-        String batchNo = DateUtils.dateFormat(new Date(), "yyyyMMdd");
+        String batchNo = System.currentTimeMillis() + "";
         MailFileFolderPathPO fileFolderPathPO = mailFileFolderPathService.findFolder();
 
         File file = new File(fileFolderPathPO.getFolderPath());
         File[] files = file.listFiles();
-        // 查找所有邮箱地址配置信息
-        List<MailAddressInfoPO> allMailAddressInfo = mailAddressInfoService.findAll();
-        // 根据文件名字查找对应的邮箱地址
+        // 获取所有的邮箱群组
+        List<MailGroupInfoPO> mailGroupInfoPOS = mailGroupInfoService.findAll();
+        // 根据文件名字查找对应的邮箱群组信息
         for (File subFile : files) {
+            Boolean flag = true;
             //去除文件后缀名
             final String fileName = FileUtil.getFileNameWithoutSuffix(subFile);
-            // 根据文件名过滤邮箱地址
+            // 根据文件名过滤邮箱群组
             List<MailAddressInfoPO> mailAddressInfoPOS = new ArrayList<>();
-            for (MailAddressInfoPO mailAddressInfoPO : allMailAddressInfo) {
-                if (fileName.contains(mailAddressInfoPO.getFileName())){
-                    mailAddressInfoPOS.add(mailAddressInfoPO);
+            for (MailGroupInfoPO mailGroupInfoPO : mailGroupInfoPOS) {
+                if (fileName.contains(mailGroupInfoPO.getMailFileName())) {
+                    // 文件对应的群组, 根据群组汇总发送记录
+                    saveMailFileInfo(mailGroupInfoPO, subFile, batchNo);
+                    flag = false;
+                    break;
                 }
             }
-            saveMailFileInfo(mailAddressInfoPOS,subFile, batchNo);
+            if (flag) {
+                logger.info("文件: " + fileName + "找不到对应群组 ,无法发送,请确认");
+            }
         }
         return batchNo;
     }
 
-    private void saveMailFileInfo(List<MailAddressInfoPO> addressInfoPOS, File file, String batchNo){
-        for (MailAddressInfoPO addressInfoPO : addressInfoPOS) {
+    /**
+     * 汇总并发送邮件
+     */
+    @Override
+    public Integer sendMail() {
+        // 获取所有未发送邮件
+        List<MailFileInfoPO> unSendList = mailFileInfoDAO.findUnSendMail();
+        Integer count = 0;
+        for (MailFileInfoPO mailFileInfoPO : unSendList) {
+            try {
+                File file = new File(mailFileInfoPO.getFilePath());
+                MailBean mailBean = new MailBean();
+                mailBean.setFile(file);
+                mailBean.setSender(sender);
+                mailBean.setRecipient(mailFileInfoPO.getAddress());
+                mailService.sendSimpleMail(mailBean);
+                mailFileInfoPO.setSendStatus("Y");
+                mailFileInfoPO.setSendMsg("发送成功了");
+                mailFileInfoPO.setSendDate(new Date());
+                count++;
+            } catch (Exception e) {
+                mailFileInfoPO.setSendStatus("E");
+                mailFileInfoPO.setSendMsg(e.getMessage());
+            }
+            mailFileInfoDAO.updateById(mailFileInfoPO);
+        }
+        return count;
+    }
+
+    private void saveMailFileInfo(MailGroupInfoPO mailGroupInfoPO, File file, String batchNo) {
+        // 根据邮箱群组, 找对应的所有邮箱地址
+        List<MailAddressInfoPO> mailAddressInfoPOS = mailAddressInfoService.findByGroupId(mailGroupInfoPO.getMailGroupId());
+        if (CollectionUtils.isEmpty(mailAddressInfoPOS)) {
+            logger.info("邮箱群组id:" + mailGroupInfoPO.getMailGroupId() + " 中邮箱地址为空, 请确认");
+        }
+        for (MailAddressInfoPO mailAddressInfoPO : mailAddressInfoPOS) {
             MailFileInfoPO mailFileInfoPO = new MailFileInfoPO();
+            mailFileInfoPO.setGroupId(mailGroupInfoPO.getMailGroupId());
+            mailFileInfoPO.setGroupName(mailGroupInfoPO.getMailGroupName());
+            mailFileInfoPO.setAddress(mailAddressInfoPO.getAddress());
             mailFileInfoPO.setBatchNo(batchNo);
-            mailFileInfoPO.setAddressId(addressInfoPO.getAddressId());
             mailFileInfoPO.setFileName(file.getName());
             mailFileInfoPO.setFilePath(file.getPath());
             mailFileInfoPO.setCreationDate(new Date());
-//            mailFileInfoPO.setSendDate(null);
-//            mailFileInfoPO.setSendMsg(null);
+            mailFileInfoPO.setSendStatus("N");
             mailFileInfoDAO.insert(mailFileInfoPO);
         }
-
     }
 }

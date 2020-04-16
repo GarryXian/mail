@@ -36,3 +36,5 @@ spring:
 mybatis:
   mapper-locations: classpath*:com/garry/mail/dao/*.xml
   type-aliases-package: com.garry.mail.dao
+
+sender: garry_xian92@163.com

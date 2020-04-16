@@ -34,24 +34,20 @@ public class MailAddressInfoPO  {
 	@TableId(value = "address_id", type = IdType.ID_WORKER)
 	private Long addressId;
 
-	/**邮箱地址*/
-	@ApiModelProperty(value = "邮箱地址")
-	@TableField("address")
+	/**邮箱地址id*/
+	@ApiModelProperty(value = "邮箱地址id")
+	@TableId(value = "address")
 	private String address;
 
-	/**邮箱地址名称*/
-	@ApiModelProperty(value = "邮箱地址名称")
-	@TableField("address_name")
-	private String addressName;
+
+	/**邮箱群组id*/
+	@ApiModelProperty(value = "邮箱群组id")
+	@TableId(value = "group_id")
+	private Long groupId;
 
 	/**创建时间*/
 	@ApiModelProperty(value = "创建时间")
 	@TableField("creation_date")
 	private java.util.Date creationDate;
-
-
-	@ApiModelProperty(value = "文件名字")
-	@TableField("file_name")
-	private String fileName;
 
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.garry.mail.dao.MailGroupInfoDAO">
+
+    <resultMap id="BaseResultMap" type="com.garry.mail.model.MailGroupInfoPO">
+        <id column="mail_group_id" property="mailGroupId"/>
+        <result column="mail_group_name" property="mailGroupName"/>
+        <result column="mail_file_name" property="mailFileName"/>
+    </resultMap>
+
+	<sql id="BaseColumns">
+			mail_group_id
+			,mail_group_name
+			,mail_file_name
+	</sql>
+
+	<select id="query" parameterType="java.util.Map" resultMap="BaseResultMap">
+		SELECT
+		<include refid="BaseColumns"/>
+		FROM mail_group_info
+		<where>
+			<if test="mailGroupId != null ">
+				AND mail_group_id = #{mailGroupId}
+			</if>
+			<if test="mailGroupName != null ">
+				AND mail_group_name = #{mailGroupName}
+			</if>
+			<if test="mailFileName != null ">
+				AND mail_file_name = #{mailFileName}
+			</if>
+		</where>
+	</select>
+
+	<select id="pageQuery" parameterType="java.util.Map" resultMap="BaseResultMap">
+		SELECT
+		<include refid="BaseColumns"/>
+		FROM mail_group_info
+		<where>
+			<if test="mailGroupId != null ">
+				AND mail_group_id = #{mailGroupId}
+			</if>
+			<if test="mailGroupName != null ">
+				AND mail_group_name = #{mailGroupName}
+			</if>
+			<if test="mailFileName != null ">
+				AND mail_file_name = #{mailFileName}
+			</if>
+		</where>
+	</select>
+
+
+
+</mapper>

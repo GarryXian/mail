@@ -35,4 +35,9 @@ public class MailAddressInfoServiceImpl implements MailAddressInfoService {
         return mailAddressInfoDAO.findAll();
     }
 
+    @Override
+    public List<MailAddressInfoPO> findByGroupId(Long groupId) {
+
+        return mailAddressInfoDAO.findByGroupId(groupId);
+    }
 }

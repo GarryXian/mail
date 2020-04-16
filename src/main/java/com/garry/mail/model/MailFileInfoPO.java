@@ -36,9 +36,20 @@ public class MailFileInfoPO  {
 	private Long fileId;
 
 	/**邮箱地址id*/
-	@ApiModelProperty(value = "邮箱地址id")
-	@TableField(value = "address_id")
-	private Long addressId;
+	@ApiModelProperty(value = "邮箱群组Id")
+	@TableField(value = "group_id")
+	private Long groupId;
+
+	/**邮箱地址id*/
+	@ApiModelProperty(value = "邮箱群组名称")
+	@TableField(value = "group_name")
+	private String groupName;
+
+	/**邮箱地址id*/
+	@ApiModelProperty(value = "邮箱地址")
+	@TableField(value = "address")
+	private String address;
+
 
 	/**发送批次号*/
 	@ApiModelProperty(value = "发送批次号")
@@ -69,4 +80,10 @@ public class MailFileInfoPO  {
 	@ApiModelProperty(value = "发送回执")
 	@TableField(value = "send_msg")
 	private String sendMsg;
+
+
+	/**发送回执*/
+	@ApiModelProperty(value = "发送状态")
+	@TableField(value = "send_status")
+	private String sendStatus;
 }

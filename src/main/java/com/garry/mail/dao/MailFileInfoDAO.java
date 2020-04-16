@@ -24,5 +24,6 @@ public interface MailFileInfoDAO extends BaseMapper<MailFileInfoPO> {
 
     List<MailFileInfoPO> query(Map<String, Object> param);
 
+    List<MailFileInfoPO> findUnSendMail();
 
 }

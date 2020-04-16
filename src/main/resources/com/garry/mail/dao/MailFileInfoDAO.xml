@@ -4,24 +4,30 @@
 
     <resultMap id="BaseResultMap" type="com.garry.mail.model.MailFileInfoPO">
         <id column="file_id" property="fileId"/>
-        <result column="address_id" property="addressId"/>
+        <result column="address" property="address"/>
         <result column="batch_no" property="batchNo"/>
         <result column="file_name" property="fileName"/>
         <result column="file_path" property="filePath"/>
         <result column="creation_date" property="creationDate"/>
         <result column="send_date" property="sendDate"/>
         <result column="send_msg" property="sendMsg"/>
+		<result column="send_status" property="sendStatus"/>
+		<result column="group_id" property="groupId"/>
+		<result column="group_name" property="groupName"/>
     </resultMap>
 
 	<sql id="BaseColumns">
 			file_id
-			,address_id
+			,address
 			,batch_no
 			,file_name
 			,file_path
 			,creation_date
 			,send_date
 			,send_msg
+			,send_status
+			,group_id
+			,group_name
 	</sql>
 
 	<select id="query" parameterType="java.util.Map" resultMap="BaseResultMap">
@@ -56,36 +62,10 @@
 		</where>
 	</select>
 
-	<select id="pageQuery" parameterType="java.util.Map" resultMap="BaseResultMap">
+	<select id="findUnSendMail" parameterType="java.util.Map" resultMap="BaseResultMap">
 		SELECT
 		<include refid="BaseColumns"/>
-		FROM mail_file_info
-		<where>
-			<if test="fileId != null ">
-				AND file_id = #{fileId}
-			</if>
-			<if test="addressId != null ">
-				AND address_id = #{addressId}
-			</if>
-			<if test="batchNo != null ">
-				AND batch_no = #{batchNo}
-			</if>
-			<if test="fileName != null ">
-				AND file_name = #{fileName}
-			</if>
-			<if test="filePath != null ">
-				AND file_path = #{filePath}
-			</if>
-			<if test="creationDate != null ">
-				AND creation_date = #{creationDate}
-			</if>
-			<if test="sendDate != null ">
-				AND send_date = #{sendDate}
-			</if>
-			<if test="sendMsg != null ">
-				AND send_msg = #{sendMsg}
-			</if>
-		</where>
+		FROM mail_file_info where send_status = 'N'
 	</select>
 
 

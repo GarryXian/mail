@@ -8,5 +8,5 @@ import com.garry.mail.model.MailBean;
  */
 public interface MailService {
 
-    void sendSimpleMail(MailBean mailBean);
+    void sendSimpleMail(MailBean mailBean) throws Exception;
 }

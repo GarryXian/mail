@@ -4,39 +4,17 @@
 
     <resultMap id="BaseResultMap" type="com.garry.mail.model.MailAddressInfoPO">
         <id column="address_id" property="addressId"/>
-        <result column="address" property="address"/>
-        <result column="address_name" property="addressName"/>
+		<result property="groupId" column="group_id"/>
         <result column="creation_date" property="creationDate"/>
-		<result column="file_name" property="fileName"/>
     </resultMap>
 
 	<sql id="BaseColumns">
 			address_id
 			,address
-			,address_name
+			,group_id
 			,creation_date
-			,file_name
 	</sql>
 
-	<select id="query" parameterType="java.util.Map" resultMap="BaseResultMap">
-		SELECT
-		<include refid="BaseColumns"/>
-		FROM mail_address_info
-		<where>
-			<if test="addressId != null ">
-				AND address_id = #{addressId}
-			</if>
-			<if test="address != null ">
-				AND address = #{address}
-			</if>
-			<if test="addressName != null ">
-				AND address_name = #{addressName}
-			</if>
-			<if test="creationDate != null ">
-				AND creation_date = #{creationDate}
-			</if>
-		</where>
-	</select>
 
 	<select id="findAll" parameterType="java.util.Map" resultMap="BaseResultMap">
 		SELECT
@@ -44,5 +22,11 @@
 		FROM mail_address_info
 	</select>
 
+	<select id="findByGroupId" parameterType="java.util.Map" resultMap="BaseResultMap">
+		SELECT
+		<include refid="BaseColumns"/>
+		FROM mail_address_info
+		WHERE group_id = #{groupId}
+	</select>
 
 </mapper>

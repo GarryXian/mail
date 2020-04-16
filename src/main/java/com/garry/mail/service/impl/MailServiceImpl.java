@@ -2,11 +2,21 @@ package com.garry.mail.service.impl;
 
 import com.garry.mail.model.MailBean;
 import com.garry.mail.service.MailService;
+import com.garry.mail.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.File;
 
 /**
  * @author 冼家荣 xianjr1 xianjr1@meicloud.com
@@ -20,16 +30,22 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public void sendSimpleMail(MailBean mailBean) {
+    public void sendSimpleMail(MailBean mailBean) throws Exception{
         try {
-            SimpleMailMessage mailMessage= new SimpleMailMessage();
-            mailMessage.setFrom(mailBean.getMAIL_SENDER());
-            mailMessage.setTo(mailBean.getRecipient());
-            mailMessage.setSubject(mailBean.getSubject());
-            mailMessage.setText(mailBean.getContent());
-            javaMailSender.send(mailMessage);
+            File file = mailBean.getFile();
+            Multipart multipart = new MimeMultipart();
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.attachFile(file);
+            multipart.addBodyPart(messageBodyPart);
+            MimeMessage message = javaMailSender.createMimeMessage();
+            message.setFrom(mailBean.getSender());
+            message.setRecipient(Message.RecipientType.TO,new InternetAddress(mailBean.getRecipient()) );
+            message.setSubject(FileUtil.getFileNameWithoutSuffix(file));
+            message.setContent(multipart);
+            javaMailSender.send(message);
         } catch (Exception e) {
-            log.error("邮件发送失败", e.getMessage());
+            log.error("邮件发送失败{}", e.getMessage());
+            throw new Exception("邮件发送失败"+ e.getMessage());
         }
     }
 }

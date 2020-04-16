@@ -18,6 +18,12 @@ import java.text.ParseException;
 public interface MailFileInfoService {
 
     /**
+     * 汇总并发送邮件
+     * @return
+     */
+    Integer sendMail();
+
+    /**
      * 构建邮箱地址与附件信息表
      * @return
      */
