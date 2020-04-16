@@ -20,6 +20,7 @@ import lombok.ToString;
  * @author create by CodeGenerator
  */
 @ApiModel(value = "MailAddressInfoPO", description = "邮箱地址信息 实体类")
+@TableName(value = "mail_address_info")
 @Getter
 @Setter
 @ToString

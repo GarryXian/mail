@@ -1,6 +1,6 @@
 package com.garry.mail.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
@@ -22,6 +22,7 @@ import lombok.ToString;
  * @author create by CodeGenerator
  */
 @ApiModel(value = "MailFileInfoPO", description = "附件文件实体类 实体类")
+@TableName(value = "mail_file_info")
 @Getter
 @Setter
 @ToString

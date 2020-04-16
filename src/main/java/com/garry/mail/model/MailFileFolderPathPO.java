@@ -2,7 +2,7 @@ package com.garry.mail.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,6 +22,7 @@ import lombok.ToString;
  * @author create by CodeGenerator
  */
 @ApiModel(value = "MailFileFolderPathPO", description = "附件文件夹实体类 实体类")
+@TableName(value = "mail_file_folder_path")
 @Getter
 @Setter
 @ToString
