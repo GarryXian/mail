@@ -14,7 +14,7 @@ spring:
     name: autoMail
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://127.0.0.1:3308/mailService?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false&zeroDateTimeBehavior=convertToNull"
+    url: "jdbc:mysql://127.0.0.1:3306/mailService?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false&zeroDateTimeBehavior=convertToNull"
     username: root
     password: "root"
     druid:
@@ -23,8 +23,8 @@ spring:
       minIdle: 5
   mail:
     host: smtp.163.com
-    username: garry_xian92@163.com
-    password: YKVSDUYLUYUNFWYG
+    username: 18676391882@163.com
+    password: JMJCBTQZWGMMIBAJ
     default-encoding: UTF-8
     properties:
       mail:
@@ -37,4 +37,4 @@ mybatis:
   mapper-locations: classpath*:com/garry/mail/dao/*.xml
   type-aliases-package: com.garry.mail.dao
 
-sender: garry_xian92@163.com
+sender: 18676391882@163.com
