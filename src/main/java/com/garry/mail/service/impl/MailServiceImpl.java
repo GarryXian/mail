@@ -40,7 +40,11 @@ public class MailServiceImpl implements MailService {
             multipart.addBodyPart(messageBodyPart);
             MimeMessage message = javaMailSender.createMimeMessage();
             message.setFrom(mailBean.getSender());
-            message.setRecipient(Message.RecipientType.TO,new InternetAddress(mailBean.getRecipient()) );
+            InternetAddress[] addresses = new InternetAddress[mailBean.getRecipients().length];
+            for (int i = 0; i < mailBean.getRecipients().length; i++) {
+                addresses[i] = new InternetAddress( mailBean.getRecipients()[i]);
+            }
+            message.setRecipients(Message.RecipientType.TO,addresses);
             message.setSubject(FileUtil.getFileNameWithoutSuffix(file));
             message.setContent(multipart);
             javaMailSender.send(message);

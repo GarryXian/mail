@@ -6,6 +6,7 @@ import com.garry.mail.model.MailFileInfoPO;
 import com.garry.mail.service.MailFileInfoService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,10 +32,10 @@ public class MailFileInfoController {
 	@Resource
 	private MailFileInfoService mailFileInfoService;
 
-	@GetMapping("/buildMailFileInfo")
-	public ResponseResult<String> buildAndSaveMailFileInfo() {
+	@GetMapping("/buildMailFileInfo/{date}")
+	public ResponseResult<String> buildAndSaveMailFileInfo(@PathVariable String date) {
 		try {
-			String result =	mailFileInfoService.buildAndSaveMailFileInfo();
+			String result =	mailFileInfoService.buildAndSaveMailFileInfo(date);
 			return ResponseResult.createSuccessResult(
                     String.format("构建成功,批次号 %s, 请留意检查!!", result));
 		} catch (Exception e) {

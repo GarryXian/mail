@@ -36,16 +36,6 @@ public class MailFileInfoPO  {
 	private Long fileId;
 
 	/**邮箱地址id*/
-	@ApiModelProperty(value = "邮箱群组Id")
-	@TableField(value = "group_id")
-	private Long groupId;
-
-	/**邮箱地址id*/
-	@ApiModelProperty(value = "邮箱群组名称")
-	@TableField(value = "group_name")
-	private String groupName;
-
-	/**邮箱地址id*/
 	@ApiModelProperty(value = "邮箱地址")
 	@TableField(value = "address")
 	private String address;

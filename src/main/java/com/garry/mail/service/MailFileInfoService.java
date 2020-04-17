@@ -27,5 +27,5 @@ public interface MailFileInfoService {
      * 构建邮箱地址与附件信息表
      * @return
      */
-    String buildAndSaveMailFileInfo() throws ParseException;
+    String buildAndSaveMailFileInfo(String date) throws ParseException;
 }

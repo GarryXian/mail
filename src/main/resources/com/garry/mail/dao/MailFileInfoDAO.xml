@@ -12,8 +12,6 @@
         <result column="send_date" property="sendDate"/>
         <result column="send_msg" property="sendMsg"/>
 		<result column="send_status" property="sendStatus"/>
-		<result column="group_id" property="groupId"/>
-		<result column="group_name" property="groupName"/>
     </resultMap>
 
 	<sql id="BaseColumns">
@@ -26,8 +24,6 @@
 			,send_date
 			,send_msg
 			,send_status
-			,group_id
-			,group_name
 	</sql>
 
 	<select id="query" parameterType="java.util.Map" resultMap="BaseResultMap">
