@@ -6,6 +6,7 @@
 
 
     <include file="liquibase/mailService.xml" relativeToChangelogFile="false"/>
+    <include file="liquibase/2020041701.xml" relativeToChangelogFile="false"/>
 
 
 </databaseChangeLog>
