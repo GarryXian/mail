@@ -14,7 +14,7 @@ spring:
     name: autoMail
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://127.0.0.1:3306/mailService?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false&zeroDateTimeBehavior=convertToNull"
+    url: "jdbc:mysql://127.0.0.1:3308/mailService?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false&zeroDateTimeBehavior=convertToNull"
     username: root
     password: "root"
     druid:
@@ -33,6 +33,13 @@ spring:
           starttles:
             enabled: true
             required: true
+  liquibase:
+     # 不配置默认会查找'classpath:/db/changelog/db.changelog-master.yaml'文件
+     change-log: 'classpath:/db/changelog/db.changelog-master.yml'
+  jpa:
+    show-sql: false
+    hibernate:
+    ddl-auto: none
 mybatis:
   mapper-locations: classpath*:com/garry/mail/dao/*.xml
   type-aliases-package: com.garry.mail.dao
