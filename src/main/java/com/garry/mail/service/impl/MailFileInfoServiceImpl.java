@@ -78,6 +78,7 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
             mailFileInfoPO.setCreationDate(new Date());
             mailFileInfoPO.setSendStatus("N");
             mailFileInfoPO.setBatchNo(batchNo);
+            // 遍历文件夹下需要发送的文件
             for (File mailFile : mailFileFolder.listFiles()) {
                 if (mailFile.getName().contains(date)) {
                     // 找到需发送的文件
@@ -121,6 +122,7 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
                 mailFileInfoPO.setSendDate(new Date());
                 count++;
             } catch (Exception e) {
+                logger.error("文件夹 {} 邮件发送失败, 请联系 大佬", mailFileInfoPO.getFileName());
                 mailFileInfoPO.setSendStatus("E");
                 mailFileInfoPO.setSendMsg(e.getMessage());
             }
