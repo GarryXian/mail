@@ -59,6 +59,7 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
      */
     @Override
     public String buildAndSaveMailFileInfo(String date) throws ParseException {
+        logger.info("开始构建中" );
         // 创建批次号
         String batchNo = System.currentTimeMillis() + "";
         MailFileFolderPathPO fileFolderPathPO = mailFileFolderPathService.findFolder();
@@ -68,8 +69,9 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
 
         // 2. 遍历, 获取 mailAddress.txt 和 对应日期要发送的文件
         for (File mailFileFolder : files) {
-
+            logger.info("开始遍历文件 {}", mailFileFolder.getName() );
             if (mailFileFolder.isFile()) {
+                logger.info("文件 {} 不是文件夹, 跳过", mailFileFolder.getName() );
                 // 如果不是文件夹, 跳过
                 continue;
             }
@@ -80,12 +82,16 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
             mailFileInfoPO.setBatchNo(batchNo);
             // 遍历文件夹下需要发送的文件
             for (File mailFile : mailFileFolder.listFiles()) {
+                logger.info("获取到文件夹 {} 下文件 {} ", mailFileFolder.getName(), mailFile.getName() );
+                Boolean flag = false;
                 if (mailFile.getName().contains(date)) {
+                    logger.info(" 找到文件夹 {} 下文件 {} 符合输入日期", mailFileFolder.getName(), mailFile.getName() );
                     // 找到需发送的文件
                     mailFileInfoPO.setFileName(mailFile.getName());
                     mailFileInfoPO.setFilePath(mailFile.getPath());
                 }
                 if (mailFile.getName().contains(MAIL_ADDRESS)) {
+                    logger.info(" 找到文件夹 {} 下文件 {} 的地址文件", mailFileFolder.getName(), mailFile.getName() );
                     // 找到邮件地址配置文件, 需读取
                     String recipients = FileUtil.readFile(mailFile);
                     mailFileInfoPO.setAddress(recipients);
