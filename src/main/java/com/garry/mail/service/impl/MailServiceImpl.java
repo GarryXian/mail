@@ -31,7 +31,7 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public void sendSimpleMail(MailBean mailBean) throws Exception{
+    public void sendSimpleMail(MailBean mailBean) throws Exception {
         try {
             File file = mailBean.getFile();
             Multipart multipart = new MimeMultipart();
@@ -42,15 +42,16 @@ public class MailServiceImpl implements MailService {
             message.setFrom(mailBean.getSender());
             InternetAddress[] addresses = new InternetAddress[mailBean.getRecipients().length];
             for (int i = 0; i < mailBean.getRecipients().length; i++) {
-                addresses[i] = new InternetAddress( mailBean.getRecipients()[i]);
+                addresses[i] = new InternetAddress(mailBean.getRecipients()[i]);
             }
-            message.setRecipients(Message.RecipientType.TO,addresses);
+            message.setRecipients(Message.RecipientType.TO, addresses);
+            message.addRecipients(Message.RecipientType.CC, mailBean.getSender());
             message.setSubject(FileUtil.getFileNameWithoutSuffix(file));
             message.setContent(multipart);
             javaMailSender.send(message);
         } catch (Exception e) {
             log.error("邮件发送失败{}", e.getMessage());
-            throw new Exception("邮件发送失败"+ e.getMessage());
+            throw new Exception("邮件发送失败" + e.getMessage());
         }
     }
 }
