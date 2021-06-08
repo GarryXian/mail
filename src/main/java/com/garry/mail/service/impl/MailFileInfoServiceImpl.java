@@ -48,6 +48,8 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
     private MailService mailService;
     @Value("${sender}")
     private String sender;
+    @Value("${latency_time}")
+    private Long latency_time;
 
     private static final String MAIL_ADDRESS = "MAIL_ADDRESS";
 
@@ -127,6 +129,8 @@ public class MailFileInfoServiceImpl implements MailFileInfoService {
                 mailFileInfoPO.setSendMsg("发送成功了");
                 mailFileInfoPO.setSendDate(new Date());
                 count++;
+                logger.info("开始等待： " + latency_time +"ms 后发送下一个邮件");
+                Thread.sleep(latency_time);
             } catch (Exception e) {
                 logger.error("文件夹 {} 邮件发送失败, 请联系 大佬", mailFileInfoPO.getFileName());
                 mailFileInfoPO.setSendStatus("E");

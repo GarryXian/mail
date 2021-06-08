@@ -45,3 +45,4 @@ mybatis:
   type-aliases-package: com.garry.mail.dao
 
 sender: 18676391882@163.com
+latency_time: 5000
